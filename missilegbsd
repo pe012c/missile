@@ -1,9 +1,11 @@
 #Code in R
+#Analysis of DSA data with to understand main cost drivers for strategic ICBMs
+
 
 setwd("E:/Unencrypted Folder/R scripts") #NG
-setwd("M:/Unencrypted Folder/R scripts") #Home
+
 #data notes:
-#original missile_reg1.csv was based on Data search associates
+#original missile_reg1.csv was based on Data Search Associates
 #altitude and accuracy added to subset of data in missile_reg5.csv
 
 missile=read.csv("missile_reg5.csv", header=TRUE)
