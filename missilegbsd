@@ -1,0 +1,494 @@
+#Code in R
+
+setwd("E:/Unencrypted Folder/R scripts") #NG
+setwd("M:/Unencrypted Folder/R scripts") #Home
+#data notes:
+#original missile_reg1.csv was based on Data search associates
+#altitude and accuracy added to subset of data in missile_reg5.csv
+
+missile=read.csv("missile_reg5.csv", header=TRUE)
+missile2=read.csv("missile_reg1.csv", header=TRUE, na.strings = c("NA", "NaN", "")) #total data set
+
+
+#run summary statistics on dataset
+summary(missile2)
+#get additional statistics
+sapply(missile2$Launch_lbs, mean, na.rm=TRUE)
+#find standard deviation
+sd(missile2$Launch_lbs, na.rm=TRUE)
+mean(missile2$Launch_lbs, na.rm=TRUE)
+
+dim(missile2)
+#run box plots
+library(ggplot2)
+
+# change outlier, color, shape and size
+p <- ggplot(missile2, aes(x="n=45", y=Launch_lbs))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Tot Wgt")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+    
+####plot subset of missiles
+# change outlier, color, shape and size
+psub <- ggplot(missile, aes(x="n=8", y=Launch_lbs))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Launch Weight-ICBM")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+
+####boxplot Diameter
+# change outlier, color, shape and size
+pp3sub <- ggplot(missile, aes(x="n=8", y=Diameter_in))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Diameter-ICBM")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+
+
+#use multiplot to rendor multiple plots in one page
+#requires custom function multiplot defined below
+multiplot(psub, pp3sub, cols=2)
+
+####boxplot payload
+# change outlier, color, shape and size
+ppl <- ggplot(missile, aes(x="n=45", y=Payload_lbs))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("PL Wgt")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+
+####boxplot Length
+# change outlier, color, shape and size
+pp2 <- ggplot(missile, aes(x="n=45", y=Length_Ft))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Length")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+####boxplot Diameter
+# change outlier, color, shape and size
+pp3 <- ggplot(missile, aes(x="n=45", y=Diameter_in))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Diameter")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+####boxplot Altitude
+# change outlier, color, shape and size
+pp4 <- ggplot(missile, aes(x="n=45", y=Altitude_ftK))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Altitude")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+####boxplot Speed_Mach
+# change outlier, color, shape and size
+pp5 <- ggplot(missile, aes(x="n=45", y=Speed_Mach))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Speed")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+####boxplot Range
+# change outlier, color, shape and size
+pp6 <- ggplot(missile, aes(x="n=45", y=Range_nmi))+
+    geom_boxplot(outlier.colour="red", outlier.shape = 8, outlier.size=4)+
+    #add mean points
+    stat_summary(fun.y=mean, geom="point", shape=5, size=5) +
+    #add error bars
+    stat_boxplot(geom= "errorbar", colour="blue")+
+    #add points
+    geom_dotplot(binaxis = 'y', stackdir = 'center', dotsize = 0.5)+
+    ##add title
+    ggtitle("Range")+
+    #center title
+    theme(plot.title = element_text(hjust = 0.5))+
+    #title size
+    theme(plot.title = element_text(size = 10))
+
+#use multiplot to rendor multiple plots in one page
+#requires custom function multiplot defined below
+multiplot(p, ppl, pp2, pp3, pp4, pp5, pp6, cols=7)
+
+## add missile identification using dplyr and tbl
+library(dplyr)
+missiletbl <- tbl_df(missile2)
+glimpse(missiletbl)
+dim(missiletbl)
+missiletbl2 <- mutate(missiletbl, ICBM=ifelse(missiletbl$Launch_lbs>=30000 &
+        missiletbl$Launch_lbs<=120000, 1,0))
+select(missiletbl2, ICBM)
+min(missiletbl2$Launch_lbs)
+
+
+missile
+
+##use Linear Regression
+slrfit1 <- lm(PAUC~Launch_lbs, data=missile)
+slrfit2 <- lm(AUC~Launch_lbs, data=missile)
+slrfit3 <- lm(TotalProcCost~Range_nmi, data=missile)
+slrfit4 <- lm(TotalProgramCost~Range_nmi, data=missile)
+
+#show  residuals at fit
+par(mfrow=c(1,2))
+plot(slrfit1)
+plot(slrfit2)
+plot(slrfit3)
+plot(slrfit4)
+
+##use best subset selection
+library(ISLR)
+library(leaps)
+
+
+#Ridge and Lasso Regression NOT FINISHED
+##to use glmnet we must create a matrix
+x=model.matrix(PAUC~.,missile)[,-1] #remove first column which is the names
+y=missile$PAUC
+library(glmnet)
+grid=10^seq(10,-2,length=100)
+ridge.mod=glmnet(x,y,alpha=0, lambda=grid) #alpha=0 is ridge regression
+dim(coef(ridge.mod))
+
+library(pls)
+
+par(mfrow=c(2,2))
+set.seed(2)
+pcr.fit1=pcr(PAUC~., data=missile, scale=TRUE)
+summary(pcr.fit1)
+
+pcr.fit2=pcr(AUC~., data=missile, scale=TRUE)
+summary(pcr.fit2)
+
+pcr.fit3=pcr(TotalProcCost~., data=missile, scale=TRUE)
+summary(pcr.fit3)
+
+pcr.fit4=pcr(TotalProgramCost~., data=missile, scale=TRUE)
+summary(pcr.fit4)
+
+#show scree plots
+validationplot(pcr.fit1, val.type = "MSEP")
+validationplot(pcr.fit2, val.type = "MSEP")
+validationplot(pcr.fit3, val.type = "MSEP")
+validationplot(pcr.fit4, val.type = "MSEP")
+
+
+
+library(car)
+names(missile)
+#run added-variable plots
+
+attach(missile)
+avPlots(lm(AUC~Launch_lbs+Accuracy, data=missile))
+avPlots(lm(PAUC~Launch_lbs+Accuracy, data=missile))
+avPlots(lm(APUC~Launch_lbs+Accuracy, data=missile))
+avPlots(lm(RDTECost~Diameter_in+Payload_lbs, data=missile))
+
+lmfit1=lm(AUC~Launch_lbs+Accuracy, data=missile)
+lmfit2=lm(PAUC~Launch_lbs+Accuracy, data=missile)
+lmfit3=lm(APUC~Launch_lbs+Accuracy, data=missile)
+lmfit4=lm(RDTECost~Diameter_in+Payload_lbs, data=missile)
+
+#plot qq plot and residuals
+plot(lmfit1)
+plot(lmfit2)
+plot(lmfit3)
+plot(lmfit4)
+
+#potential outliers spotted in last paritial regression plot for RDTECost
+#leverage testing for potential outlier
+par(mfrow=c(1,1))
+plot(hatvalues(lmfit2), main="Leverage Testing for PUAC=f(Launch_Wgt +Accuracy)", xlab="Observation #", ylab= "leverage value", col="blue")
+plot(hatvalues(lmfit4), main="Leverage Testing for RDTE=f(Diameter+Payload_Wgt)", xlab="Observation #", ylab= "leverage value", col="blue")
+
+
+
+
+
+
+#3d scatter3d for use with EDA;  to be used with Identify3d
+library(car)
+
+
+attach(missile)
+scatter3d(Payload_lbs,RDTECost, Diameter_in)
+Identify3d(Payload_lbs, RDTECost, Diameter_in)
+
+scatter3d(Payload_lbs, Diameter_in, RDTECost)
+Identify3d(Payload_lbs, Diameter_in, RDTECost)
+
+
+
+
+#3D Scatterplot with coloring and vertical lines
+library(scatterplot3d)
+attach(missile)
+
+par(mfrow=c(2,2))
+par(mfrow=c(1,1))
+
+s3d1 <-scatterplot3d(Launch_lbs, Accuracy,AUC,pch=16, highlight.3d=TRUE, type="h", main="AUC=f(Launch, Accuracy)",angle=40)
+fit <- lm(AUC~Launch_lbs+Accuracy)
+s3d1$plane3d(fit)
+
+s3d1 <-scatterplot3d(Launch_lbs, Accuracy,AUC,pch=16, highlight.3d=TRUE, type="h", main="AUC=f(Launch, Accuracy)",angle=10)
+fit <- lm(AUC~Launch_lbs+Accuracy)
+s3d1$plane3d(fit)
+
+s3d2 <-scatterplot3d(Launch_lbs, Accuracy,PAUC,pch=16, highlight.3d=TRUE, type="h", main="PAUC=f(Launch, Accuracy)", angle=40)
+fit <- lm(PAUC~Launch_lbs+Accuracy)
+s3d2$plane3d(fit)
+
+s3d2 <-scatterplot3d(Launch_lbs, Accuracy,PAUC,pch=16, highlight.3d=TRUE, type="h", main="PAUC=f(Launch, Accuracy)", angle=10)
+fit <- lm(PAUC~Launch_lbs+Accuracy)
+s3d2$plane3d(fit)
+
+
+s3d3 <-scatterplot3d(Launch_lbs, Accuracy,AUC,pch=16, highlight.3d=TRUE, type="h", main="APUC=f(Launch, Accuracy)", angle=40)
+fit <- lm(APUC~Launch_lbs+Accuracy)
+s3d3$plane3d(fit)
+
+s3d3 <-scatterplot3d(Launch_lbs, Accuracy,AUC,pch=16, highlight.3d=TRUE, type="h", main="APUC=f(Launch, Accuracy)", angle=10)
+fit <- lm(APUC~Launch_lbs+Accuracy)
+s3d3$plane3d(fit)
+
+s3d4 <-scatterplot3d(Diameter_in, Payload_lbs,RDTECost,pch=16, highlight.3d=TRUE, type="h", main="RDTECost=f(Diameter, Payload_lbs)", angle=40)
+fit <- lm(RDTECost~Diameter_in+Payload_lbs)
+s3d4$plane3d(fit)
+
+s3d4 <-scatterplot3d(Diameter_in, Payload_lbs,RDTECost,pch=16, highlight.3d=TRUE, type="h", main="RDTECost=f(Diameter, Payload_lbs)", angle=10)
+fit <- lm(RDTECost~Diameter_in+Payload_lbs)
+s3d4$plane3d(fit)
+
+
+#----------------------------------------------------------
+#include spherical correlation
+library(psy)
+attach(missile)
+
+subset <- missile[-1]
+
+cormissile <- as.data.frame(cor(subset,use="pairwise.complete.obs"))
+sphpca(cormissile,input="cormissile")
+sphpca(cormissile,method="approx",input="cormissile") #rscal leads to proportional distances on sphere
+sphpca(cormissile,method="rscal",input="cormissile", output="rscal") #rscal outputs the correlation matrix
+
+
+
+##############################################################################
+#do correlation matrix
+#Correlation Matrix Heatmap
+library(ggplot2)
+
+#plot subset all launch weight > 30,000 lbs
+#missile<-subset(missile, Launch_lbs>=30000 & Launch_lbs<=120000)
+
+
+#correlate continuous variables only, remove program name
+mydata <- missile[-1]
+head(mydata)
+
+
+#subset data based on launch weight to remove outlier
+#missile2 <- missile[ which(missile$Launch_lbs>=30000 & missile$Launch_lbs <= 120000),]
+#mydata <- missile2[-1]
+
+#compute correlation matrix
+cormat <- round(cor(mydata, method="pearson"),2) # cor(x,method=c("pearson", "kendall", "spearman"))
+head(cormat)
+
+#create heatmap.  First melt the correlation matrix
+library(reshape2)
+melted_cormat <- melt(cormat)
+head(melted_cormat)
+
+#visualize the matrix
+library(ggplot2)
+ggplot(data=melted_cormat,aes(x=Var1, y=Var2, fill=value))+geom_tile(color="white")+
+  scale_fill_gradient2(low = "red", high="blue", mid="white", midpoint = 0, limit=c(-1,1), space="Lab",
+                       name="Pearson\nCorrelation")+
+  theme_minimal(base_size=12, base_family="")+ #theme_classic
+  theme(axis.text.x = element_text(angle=45, vjust=1, size=12, hjust=1))+
+  coord_fixed()
+
+#get lower and upper triangles of correlation matrix
+#get lower first
+get_lower_tri<-function(cormat){
+  cormat[upper.tri(cormat)] <-NA #make upper NA
+  return(cormat)
+}
+
+#get upper triangle
+get_upper_tri<-function(cormat){
+  cormat[lower.tri(cormat)] <-NA #make lower NA
+  return(cormat)
+}
+
+upper_tri <- get_upper_tri(cormat)
+upper_tri
+
+lower_tri <- get_lower_tri(cormat)
+lower_tri
+
+#melt the correlation data and drop the rows with NA values
+library(reshape2)
+melted_cormat <- melt(upper_tri, na.rm=TRUE)
+
+library(ggplot2)
+
+heatmap <- ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
+    geom_tile(color="white")+
+    scale_fill_gradient2(low = "red", high="blue", mid="white", midpoint = 0, limit=c(-1,1), space="Lab",
+                       name="Pearson\nCorrelation")+
+    theme_minimal(base_size=12, base_family="")+ #theme_classic
+    theme(axis.text.x = element_text(angle=45, vjust=1, size=12, hjust=1))+
+    coord_fixed()
+
+#add title
+heatmap+ggtitle("Correlation Matrix\nn=8, Launch Weight 30,000-120,000 lbs")+
+    theme(plot.title = element_text(lineheight = 1, face="bold", hjust=0.5))+
+    labs(x="", y="")
+
+#heatmap+ggtitle("Correlation Matrix\nn=45, All Data")+
+#    theme(plot.title = element_text(lineheight = 1, face="bold", hjust=0.5))+
+#    labs(x="", y="")
+
+#add correlation coefficients to the heatmap
+heatmap + 
+    geom_text(aes(Var2, Var1, label = value), color = "black", size = 3) +
+    theme(
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.ticks = element_blank(),
+        legend.justification = c(1, 0),
+        legend.position = c(0.6, 0.8),
+        legend.direction = "horizontal")+
+    guides(fill = guide_colorbar(barwidth = 7, barheight = 1,
+                                 title.position = "top", title.hjust = 0.5))
+
+
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+    library(grid)
+    
+    # Make a list from the ... arguments and plotlist
+    plots <- c(list(...), plotlist)
+    
+    numPlots = length(plots)
+    
+    # If layout is NULL, then use 'cols' to determine layout
+    if (is.null(layout)) {
+        # Make the panel
+        # ncol: Number of columns of plots
+        # nrow: Number of rows needed, calculated from # of cols
+        layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                         ncol = cols, nrow = ceiling(numPlots/cols))
+    }
+    
+    if (numPlots==1) {
+        print(plots[[1]])
+        
+    } else {
+        # Set up the page
+        grid.newpage()
+        pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+        
+        # Make each plot, in the correct location
+        for (i in 1:numPlots) {
+            # Get the i,j matrix positions of the regions that contain this subplot
+            matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+            
+            print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                            layout.pos.col = matchidx$col))
+        }
+    }
+}
